@@ -1,0 +1,31 @@
+{
+  "name": "dinorimas",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec ts-node --files src/index.ts",
+    "build": "tsc",
+    "start": "pm2 start dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-validator": "^6.12.1",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "mongoose": "^5.13.8",
+    "openid": "^2.0.9"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.4",
+    "@types/moment": "^2.13.0",
+    "@types/openid": "^2.0.2"
+  }
+}

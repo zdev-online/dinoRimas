@@ -8,5 +8,6 @@ export interface Config {
     },
     database_url: string;
     debug: boolean;
+    start_stuff: { steamId: number; level: number; }[]
 }
 

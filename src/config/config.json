@@ -11,5 +11,6 @@
         "api_key": "F5A03F17EFE3A54EE5076EA832E9C69A"
     },
     "database_url": "mongodb://localhost:27017/dino_rimas",
-    "debug": true
+    "debug": true,
+    "start_stuff": []
 }

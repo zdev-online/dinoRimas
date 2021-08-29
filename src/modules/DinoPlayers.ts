@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { IDinoPlayers } from '../types';
+import { IChangeColor, IDinoPlayers } from '../types';
 
 class DinoPlayers {
     private path: string;
@@ -70,9 +70,15 @@ class DinoPlayers {
     }
 
     // Сменить цвет
-    public changeColor(steamId: number){
+    public changeColor(steamId: number, colors: IChangeColor){
         let data = this.get(steamId);
-        // Какие параметры отвечают за цвета?
+        data.SkinPaletteSection1 = colors.color1;
+        data.SkinPaletteSection2 = colors.color2;
+        data.SkinPaletteSection3 = colors.color3; 
+        data.SkinPaletteSection4 = colors.color4;
+        data.SkinPaletteSection5 = colors.color5;
+        data.SkinPaletteSection6 = 0;
+        data.SkinPaletteVariation = colors.pattern;
         return this.update(steamId, data);
     }
 

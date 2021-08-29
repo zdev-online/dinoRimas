@@ -27,4 +27,13 @@ interface DinoPlayers {
     SkinPaletteVariation: string;
 }
 
-export { DinoPlayers };
+interface ChangeColor {
+    color1: number;
+    color2: number;
+    color3: number;
+    color4: number;
+    color5: number;
+    pattern: string;
+}
+
+export { DinoPlayers, ChangeColor };

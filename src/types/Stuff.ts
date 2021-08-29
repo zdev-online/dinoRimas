@@ -1,7 +1,7 @@
 import { IUser } from ".";
 
 export interface Stuff {
-    user: IUser;
+    steamId: string;
     level: number;
-    addBy: IUser;
+    addBy: string | 'system';
 }

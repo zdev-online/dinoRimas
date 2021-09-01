@@ -5,7 +5,7 @@ import * as jwt from '../utils/jwt';
 export default (req: Request, res: Response, next: NextFunction) => {
     try {
         req.token   = '';
-        req.user    = { steamId: '', name: '' };
+        req.user    = { steamId: '', name: '', id: '' };
         req.logged  = false;
         if (!req.headers.authorization) { return next(); }
         

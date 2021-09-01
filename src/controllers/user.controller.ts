@@ -40,7 +40,7 @@ export const dinos = async (req: Request, res: Response, next: NextFunction) => 
         let errors = validationResult(req);
         if(!errors.isEmpty()){ return res.error(400, { message: 'Ошибка валидации входных данных', errors: errors.array() }); }
         if(!req.query || !req.query.server){ return res.error(400, { message: 'server - не указан' }); }
-        if(!Object.keys(config.servers).includes(req.query.server)){
+        if(!Object.keys(config.servers).includes(String(req.query.server))){
             return res.error(400, { message: 'Сервер не найден' });
         }
         let dinos = await Dinos.find({ steamId: req.user.steamId });

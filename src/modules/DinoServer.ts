@@ -6,7 +6,7 @@ import config from '../config';
 
 class DinoServer {
     private path: string;
-    private server: 'V3' | 'Thenyaw';
+    private server: string;
 
     constructor(path_to_files: string, server: 'V3' | 'Thenyaw') {
         this.path = path_to_files;

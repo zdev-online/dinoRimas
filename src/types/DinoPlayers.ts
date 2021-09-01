@@ -28,7 +28,7 @@ interface DinoPlayers {
     steamId: string;
     dinoId: string;
     isActive: boolean;
-    server: 'V3' | 'Thenyaw';
+    server: string;
 }
 
 interface ChangeColor {

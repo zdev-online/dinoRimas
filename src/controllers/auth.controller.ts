@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import errorHandler from "../utils/errorHandler";
 import steamAuth from '../utils/steam';
-import { User } from '../database';
+import { User, Dinos } from '../database';
 import * as jwt from '../utils/jwt';
+import Servers from '../modules/DinoServer';
+import config from "../config";
 
 // Обработчик авторизации
 export const steam = async (req: Request, res: Response, next: NextFunction) => {
@@ -24,6 +26,12 @@ export const steam = async (req: Request, res: Response, next: NextFunction) => 
             });
         }
 
+        // Синхронизация и добавление динозавров в БД, если их нет
+        await Servers.Thenyaw.sync(Number(account.steamId), Dinos);
+        config.debug && console.log(`[Sync] Thenyaw - ${account.steamId}`);
+        await Servers.V3.sync(Number(account.steamId), Dinos);
+        config.debug && console.log(`[Sync] V3 - ${account.steamId}`);
+        
         
         let token = jwt.gen({ steamId: user.steamid, name: user.username, id: account.id });
         return res.json({ message: 'Успешная авторизация', access_token: token });

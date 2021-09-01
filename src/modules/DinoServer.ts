@@ -16,6 +16,7 @@ class DinoServer {
         this.get = this.get.bind(this);
         this.exists = this.exists.bind(this);
         this.genId = this.genId.bind(this);
+        this.sync = this.sync.bind(this);
     }
 
     private genId(): string{
@@ -103,7 +104,7 @@ class DinoServer {
 
 }
 
-export default {
+export default (() => ({
     V3: new DinoServer(config.servers.V3, 'V3'),
     Thenyaw: new DinoServer(config.servers.Thenyaw, 'Thenyaw')
-}
+}))();

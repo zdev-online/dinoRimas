@@ -18,6 +18,10 @@ export interface Config {
             SkinPaletteSection5: number[];
             SkinPaletteVariation: number[];
         }
+    };
+    servers: {
+        V3: string;
+        Thenyaw: string;
     }
 }
 

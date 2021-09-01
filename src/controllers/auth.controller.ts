@@ -24,6 +24,7 @@ export const steam = async (req: Request, res: Response, next: NextFunction) => 
             });
         }
 
+        
         let token = jwt.gen({ steamId: user.steamid, name: user.username, id: account.id });
         return res.json({ message: 'Успешная авторизация', access_token: token });
     } catch(e){

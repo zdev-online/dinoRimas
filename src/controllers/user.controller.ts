@@ -34,6 +34,7 @@ export const editColor = async (req: Request, res: Response, next: NextFunction)
     }
 }
 
+// Получить динозавров
 export const dinos = async (req: Request, res: Response, next: NextFunction) => {
     try {
         let dinos = await Dinos.find({ steamId: req.user.steamId });
@@ -43,6 +44,7 @@ export const dinos = async (req: Request, res: Response, next: NextFunction) => 
     }
 }
 
+// Добавить динозавров
 export const addDino = async (req: Request, res: Response, next: NextFunction) => {
     try {
 

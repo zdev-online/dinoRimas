@@ -13,7 +13,11 @@ const defaultConfig: IConfig = {
     database_url: "mongodb://localhost:27017/dino_rimas",
     debug: false,
     start_stuff: [],
-    dinoColors: {}
+    dinoColors: {},
+    servers: {
+        V3: '',
+        Thenyaw: ''
+    }
 }
 
 if (!fs.existsSync(path.resolve(__dirname, './', 'config.json'))) {

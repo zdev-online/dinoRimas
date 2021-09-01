@@ -28,7 +28,10 @@ const DinoSchema = new mongoose.Schema({
     SkinPaletteSection5: { type: Number, required: true },
     SkinPaletteSection6: { type: Number, required: true },
     SkinPaletteVariation: { type: String, required: true },
-    steamId: { type: String, required: true }
+    steamId: { type: String, required: true },
+    dinoId: { type: String, required: true },
+    isActive: { type: Boolean, required: true },
+    server: { type: String, required: true }
 });
 
 export default mongoose.model<IDinoPlayers>('Dinos', DinoSchema, 'dinos');

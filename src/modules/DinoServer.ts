@@ -1,18 +1,37 @@
 import fs from 'fs';
 import path from 'path';
-import { IChangeColor, IDinoPlayers } from '../types';
+import { IChangeColor, IDinoServer, IDinoPlayers } from '../types';
+import { Model } from 'mongoose';
+import config from '../config';
 
-class DinoPlayers {
+class DinoServer {
     private path: string;
+    private server: 'V3' | 'Thenyaw';
 
-    constructor(path_to_files: string) {
+    constructor(path_to_files: string, server: 'V3' | 'Thenyaw') {
         this.path = path_to_files;
+        this.server = server;
         this.isOnline = this.isOnline.bind(this);
         this.update = this.update.bind(this);
         this.get = this.get.bind(this);
         this.exists = this.exists.bind(this);
+        this.genId = this.genId.bind(this);
+    }
 
-        console.log(path.join(this.path, '1.json'))
+    private genId(): string{
+        return [...Array(20)].map(i=>(~~(Math.random()*36)).toString(36)).join('');
+    }
+
+    // Синхронизировать динозавров
+    public async sync(steamId: number, model: Model<IDinoPlayers>): Promise<void>{
+        let data = this.get(steamId);
+        if(!data.dinoId){
+            data.dinoId = this.genId();
+            await model.create({ ...data, steamId, isActive: true, server: this.server});
+            this.update(steamId, data);
+        } else {
+            console.log(`Такого быть не может (Вероятнее всего файл - изменён вручную)!!!`);
+        }
     }
 
     // "Онлайн" ли пользователь
@@ -22,13 +41,13 @@ class DinoPlayers {
     }
 
     // Обновить файл пользователя
-    private update(steamId: number, data: IDinoPlayers): IDinoPlayers {
+    private update(steamId: number, data: IDinoServer): IDinoServer {
         fs.writeFileSync(path.join(this.path, `${steamId}.json`), JSON.stringify(data), { encoding: 'utf-8' });
         return data;
     }
 
     // Получить файл пользователя
-    private get(steamId: number): IDinoPlayers {
+    private get(steamId: number): IDinoServer {
         let data = JSON.parse(fs.readFileSync(path.join(this.path, `${steamId}.json`), { encoding: 'utf-8' }));
         return data;
     }
@@ -84,4 +103,7 @@ class DinoPlayers {
 
 }
 
-export default DinoPlayers;
+export default {
+    V3: new DinoServer(config.servers.V3, 'V3'),
+    Thenyaw: new DinoServer(config.servers.Thenyaw, 'Thenyaw')
+}

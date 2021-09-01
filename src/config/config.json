@@ -1,10 +1,10 @@
 {
     "port": 3000,
     "jwt_secret": "SECRET_TOKEN_FOR_JWT",
-    "servers": [
-        "C:\\Users\\user\\Desktop\\Coding\\Заказы\\DinoRimas\\serverDataTest\\s1",
-        "C:\\Users\\user\\Desktop\\Coding\\Заказы\\DinoRimas\\serverDataTest\\s2"
-    ],
+    "servers": {
+        "Thenyaw": "C:\\Users\\user\\Desktop\\Coding\\Заказы\\DinoRimas\\serverDataTest\\s1",
+        "V3": "C:\\Users\\user\\Desktop\\Coding\\Заказы\\DinoRimas\\serverDataTest\\s2"
+    },
     "steam": {
         "realm": "http://localhost:3000/",
         "return_url": "http://localhost:3000/auth/verify",

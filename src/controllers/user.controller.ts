@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 import config from "../config";
+import { Dinos } from "../database";
 import errorHandler from "../utils/errorHandler";
 
 // Покормить динозавра
@@ -28,6 +29,23 @@ export const editColor = async (req: Request, res: Response, next: NextFunction)
     try {
         let errors = validationResult(req);
         if(!errors.isEmpty()){ return res.error(400, { message: 'Ошибка валидации входных данных', errors: errors.array() }); }
+    } catch(e){
+        return errorHandler(res, e);
+    }
+}
+
+export const dinos = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        let dinos = await Dinos.find({ steamId: req.user.steamId });
+        return res.json({ dinos });
+    } catch(e){
+        return errorHandler(res, e);
+    }
+}
+
+export const addDino = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+
     } catch(e){
         return errorHandler(res, e);
     }

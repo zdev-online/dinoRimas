@@ -8,6 +8,16 @@ export interface Config {
     },
     database_url: string;
     debug: boolean;
-    start_stuff: { steamId: number; level: number; }[]
+    start_stuff: { steamId: number; level: number; }[];
+    dinoColors: {
+        [key: string]: {
+            SkinPaletteSection1: number[];
+            SkinPaletteSection2: number[];
+            SkinPaletteSection3: number[];
+            SkinPaletteSection4: number[];
+            SkinPaletteSection5: number[];
+            SkinPaletteVariation: number[];
+        }
+    }
 }
 

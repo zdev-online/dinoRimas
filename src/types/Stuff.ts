@@ -3,5 +3,5 @@ import { IUser } from ".";
 export interface Stuff {
     steamId: string;
     level: number;
-    addBy: string | 'system';
+    addBy: string | 'SYSTEM';
 }

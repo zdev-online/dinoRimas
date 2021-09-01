@@ -7,7 +7,6 @@ import init from './utils/init';
 const app: Express = express();
 const srv: HTTPServer = new HTTPServer(app);
 
-
 (async () => {
     try {
         await init({ srv, app });

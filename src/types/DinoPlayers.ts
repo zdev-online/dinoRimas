@@ -25,7 +25,6 @@ interface DinoPlayers {
     SkinPaletteSection5: number;
     SkinPaletteSection6: number;
     SkinPaletteVariation: string;
-    dinoId: string;
     steamId: string;
 }
 

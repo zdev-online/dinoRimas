@@ -6,6 +6,7 @@ import resAddFuncMiddleware from "../middlewares/resAddFunc.middleware";
 import Routes from '../routes';
 import helmet from 'helmet';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 
 interface Options {
     app: Express;
@@ -18,6 +19,8 @@ export default async ({ srv, app }: Options) => {
     try {
         app.use(helmet());
         app.use(cors({ origin: '*' }));
+        app.use(bodyParser.urlencoded({ extended: true }));
+        app.use(bodyParser.json({ strict: true }));
         app.use(resAddFuncMiddleware);
         app.use(jwtMiddleware);
         app.use(Routes);

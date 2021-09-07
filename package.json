@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-validator": "^6.12.1",
@@ -27,5 +28,10 @@
     "@types/jsonwebtoken": "^8.5.4",
     "@types/moment": "^2.13.0",
     "@types/openid": "^2.0.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "*.json"
+    ]
   }
 }

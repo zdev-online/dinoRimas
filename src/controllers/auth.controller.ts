@@ -14,7 +14,6 @@ export const steam = async (req: Request, res: Response, next: NextFunction) => 
         if(!account){
             account = await User.create({
                 steamId: user.steamid,
-                dinos: [],
                 name: user.username,
                 realName: user.name,
                 profile: user.profile,
@@ -27,11 +26,10 @@ export const steam = async (req: Request, res: Response, next: NextFunction) => 
         }
 
         // Синхронизация и добавление динозавров в БД, если их нет
-        await Servers.Thenyaw.sync(Number(account.steamId), Dinos);
-        config.debug && console.log(`[Sync] Thenyaw - ${account.steamId}`);
-        await Servers.V3.sync(Number(account.steamId), Dinos);
-        config.debug && console.log(`[Sync] V3 - ${account.steamId}`);
-        
+        let sync1 = await Servers.Thenyaw.sync(account.steamId, Dinos);
+        sync1 && config.debug && console.log(`[Sync] Thenyaw - ${account.steamId}`);
+        let sync2 = await Servers.V3.sync(account.steamId, Dinos);
+        sync2 && config.debug && console.log(`[Sync] V3 - ${account.steamId}`);
         
         let token = jwt.gen({ steamId: user.steamid, name: user.username, id: account.id });
         return res.json({ message: 'Успешная авторизация', access_token: token });

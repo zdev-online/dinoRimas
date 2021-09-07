@@ -1,5 +1,5 @@
 {
-    "port": 3000,
+    "port": 4000,
     "jwt_secret": "SECRET_TOKEN_FOR_JWT",
     "servers": {
         "Thenyaw": "C:\\Users\\user\\Desktop\\Coding\\Заказы\\DinoRimas\\serverDataTest\\s1",
@@ -7,7 +7,7 @@
     },
     "steam": {
         "realm": "http://localhost:3000/",
-        "return_url": "http://localhost:3000/auth/verify",
+        "return_url": "http://localhost:3000/auth/steam",
         "api_key": "F5A03F17EFE3A54EE5076EA832E9C69A"
     },
     "database_url": "mongodb://localhost:27017/dino_rimas",

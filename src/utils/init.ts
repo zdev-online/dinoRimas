@@ -1,4 +1,4 @@
-import { Express } from "express";
+import { Express, Request, Response } from "express";
 import { Server as HTTP } from "http";
 import config from "../config";
 import jwtMiddleware from "../middlewares/jwt.middleware";
@@ -24,8 +24,7 @@ export default async ({ srv, app }: Options) => {
         app.use(resAddFuncMiddleware);
         app.use(jwtMiddleware);
         app.use(Routes);
-        app.use((req, res, next) => res.error(400, { message: 'Неизвестный путь' }));
-        
+        app.use((req: Request, res: Response) => res.error(400, { message: 'Неизвестный путь' }));
 
         srv.listen(config.port, () => console.log(`Сервер успешно запущен на порту: ${config.port}`));
     } catch (e) {

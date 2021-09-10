@@ -163,7 +163,6 @@ export const activateDino = async (req: Request, res: Response, next: NextFuncti
 
         if(Servers[srvIdx].isOnline(req.user.steamId)){ return res.error(403, { message: 'Динозавр - онлайн!' }); }
 
-        let data = Servers[srvIdx].get(req.user.steamId);
         let now_active = await Dinos.findOne({ steamId: req.user.steamId, server: srvIdx, isActive: true });
         if(!now_active){ return res.error(400, { message: 'Неверный server или steamId' }); }
 
@@ -175,7 +174,7 @@ export const activateDino = async (req: Request, res: Response, next: NextFuncti
         activate.isActive = true;
         await activate.save();
 
-        Servers[srvIdx].update(req.user.steamId, activate);
+        Servers[srvIdx].update(req.user.steamId, activate.toJSON());
 
         return res.json({ message: 'Динозавр активирован', dino: activate });
     } catch (e) {

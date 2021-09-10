@@ -1,3 +1,5 @@
+import { EnotIO } from "./EnotIO";
+
 export interface Config {
     port: number;
     jwt_secret: string;
@@ -5,7 +7,8 @@ export interface Config {
         realm: string;
         api_key: string;
         return_url: string;
-    },
+    };
+    enot_io: EnotIO;
     database_url: string;
     debug: boolean;
     start_stuff: { steamId: number; level: number; }[];

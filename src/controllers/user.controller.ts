@@ -136,16 +136,6 @@ export const dinos = async (req: Request, res: Response, next: NextFunction) => 
     }
 }
 
-// Добавить динозавров
-export const addDino = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        let errors = validationResult(req);
-        if (!errors.isEmpty()) { return res.error(400, { message: 'Ошибка валидации входных данных', errors: errors.array() }); }
-    } catch (e) {
-        return errorHandler(res, e);
-    }
-}
-
 // Активировать другой слот
 export const activateDino = async (req: Request, res: Response, next: NextFunction) => {
     try {

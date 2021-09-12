@@ -2,7 +2,8 @@ import { IProducts } from '../../types';
 import mongoose from '../database';
 
 const ProductsSchema = new mongoose.Schema({
-    type: { type: String, required: true },
+    product_type: { type: String, required: true },
+    item_type: { type: String, required: true },
     cost: { type: Number, required: true },
     img: { type: String, required: false, default: '' },
     title: { type: String, reuired: true },

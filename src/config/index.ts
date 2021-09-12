@@ -10,6 +10,11 @@ const defaultConfig: IConfig = {
         realm: 'http://localhost:3000/',
         api_key: ''
     },
+    enot_io: {
+        merchant_id: 0,
+        secret_word: '',
+        secret_word2: ''
+    },
     database_url: "mongodb://localhost:27017/dino_rimas",
     debug: false,
     start_stuff: [],

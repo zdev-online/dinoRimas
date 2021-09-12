@@ -8,4 +8,7 @@ export interface User {
         medium: string;
         large: string;
     };
+    money: number;
+    v3_slots: number;
+    thenyaw_slots: number;
 }

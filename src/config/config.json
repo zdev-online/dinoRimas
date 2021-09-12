@@ -11,6 +11,11 @@
         "api_key": "F5A03F17EFE3A54EE5076EA832E9C69A"
     },
     "database_url": "mongodb://localhost:27017/dino_rimas",
+    "enot_io": {
+        "merchant_id": 0,
+        "secret_word": "",
+        "secret_word2": ""
+    },
     "debug": true,
     "start_stuff": [
         {

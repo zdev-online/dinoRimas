@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { IEnotIO } from "../types";
+import { IEnotIO, IPayments, IUser, PayStatus } from "../types";
 import md5 from 'md5';
 import config from "../config";
+import { Model } from "mongoose";
 
 class EnotIOPayments {
 
@@ -27,26 +28,40 @@ class EnotIOPayments {
         };
     }
 
-    public paymentHandler(req: Request, res: Response, next: NextFunction) {
-        try {
-            let {
-                merchant, amount, credited,
-                intid, merchant_id, sign,
-                sign_2, currency, payer_details,
-                commission, custom_field
-            } = req.body;
+    public paymentHandler(Payments: Model<IPayments>, User: Model<IUser>) {
+        return async (req: Request, res: Response, next: NextFunction) => {
+            try {
+                let {
+                    merchant, amount, credited,
+                    intid, merchant_id, sign,
+                    sign_2, currency, payer_details,
+                    commission, custom_field
+                } = req.body;
 
-            let sign_check = md5(`${merchant}:${amount}:${config.enot_io.secret_word2}:${merchant_id}`);
+                let sign_check = md5(`${merchant}:${amount}:${config.enot_io.secret_word2}:${merchant_id}`);
 
-            if(sign_check != sign){
-                return res.json({ message: 'Неверная подпись оплаты' });
+                if (sign_check != sign) {
+                    return res.json({ message: 'Неверная подпись оплаты' });
+                }
+                let payment = await Payments.findOne({ payment_id: intid });
+                if(!payment){ 
+                    return res.error(400, { message: 'Покупка с таким ID не найдена' });
+                }
+                let user = await User.findById(payment.user);
+                if(!user){ return res.error(400, { message: 'Пользовател не найден' }); }
+
+                user.money += payment.amount;
+                payment.status = PayStatus.success;
+                
+                await user.save();
+                await payment.save();
+
+                return res.json({ message: 'Успешная оплата' });
+            } catch (e) {
+                return res.error(500, { message: 'Ошибка сервера' });
             }
-
-            return res.json({ message: 'Успешная оплата' });
-        } catch (e) {
-            return res.error(500, { message: 'Ошибка сервера' });
         }
     }
 }
 
-export default new EnotIOPayments(config.enot_io); 
+export default new EnotIOPayments(config.enot_io);

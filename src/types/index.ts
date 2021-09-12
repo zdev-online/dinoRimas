@@ -6,3 +6,4 @@ export { Stuff as IStuff } from './Stuff';
 export { EnotIO as IEnotIO } from './EnotIO';
 export { Payments as IPayments, PayStatus } from './Payments';
 export { Products as IProducts } from './Products';
+export { Items as IItems} from './Items';

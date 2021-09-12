@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import config from "../config";
-import { Products, User, Dinos } from "../database";
+import { Products, User, Dinos, Items } from "../database";
 import { PRODUCT_TYPES } from "../types/Products";
 import errorHandler from "../utils/errorHandler";
 import Servers from '../modules/DinoServer';
@@ -21,26 +21,26 @@ export const buy = async (req: Request, res: Response) => {
             return res.error(400, { message: 'Недостаточно монет' });
         }
 
-        if (product.product_type == PRODUCT_TYPES.DINO) { 
-            if(!Object.keys(config.dinoColors).includes(product.item_type)){
+        if (product.product_type == PRODUCT_TYPES.DINO) {
+            if (!Object.keys(config.dinoColors).includes(product.item_type)) {
                 return res.error(500, { message: 'Серверная ошибка', desc: 'Неизвестный вид динозавра' })
             }
-            if(!server){ 
+            if (!server) {
                 return res.error(400, { message: 'Укажите сервер для покупки динозавра' });
             }
-            if(!['V3', 'Thenyaw'].includes(server)){
+            if (!['V3', 'Thenyaw'].includes(server)) {
                 return res.error(400, { message: 'Неизвестный сервер' });
             }
-            let dino_object: any = {}; 
+            let dino_object: any = {};
             let count_dinos = await Dinos.countDocuments({ steamId: req.user.steamId, server });
-            if(server == 'V3'){ 
-                if(user.v3_slots+1 > count_dinos){
+            if (server == 'V3') {
+                if (user.v3_slots + 1 > count_dinos) {
                     return res.error(400, { message: 'Недостаточно слотов' });
                 }
                 dino_object = Servers['V3'].getStandartDino(product.item_type, req.user.steamId);
             }
-            if(server == 'Thenyaw'){ 
-                if(user.thenyaw_slots+1 > count_dinos){
+            if (server == 'Thenyaw') {
+                if (user.thenyaw_slots + 1 > count_dinos) {
                     return res.error(400, { message: 'Недостаточно слотов' });
                 }
                 dino_object = Servers['Thenyaw'].getStandartDino(product.item_type, req.user.steamId);
@@ -48,28 +48,17 @@ export const buy = async (req: Request, res: Response) => {
             await Dinos.create(dino_object);
         }
 
-        if (product.product_type == PRODUCT_TYPES.ITEM) { 
-            switch(product.item_type){
-                case 'heal': {
-                    break;
-                }
-                case 'drink': {
-                    break;
-                }
-                case 'teleport': {
-                    break;
-                }
-                case 'change_gender': {
-                    break;
-                }
-                default: {
-                    return res.error(500, { message: 'Серверная ошибка', desc: 'Неизвестный тип предемета' });
-                }
+        if (product.product_type == PRODUCT_TYPES.ITEM) {
+            if(!["heal","drink","teleport","change_gender"].includes(product.item_type)){
+                return res.error(500, { message: 'Серверная ошибка', desc: 'Неизвестный тип предмета' });
             }
+            await Items.create({ steamId: req.user.steamId, item_type: 'item', type: product.item_type });
         }
-        if(product.product_type == PRODUCT_TYPES.CASE){
-            switch(product.item_type){
+        if (product.product_type == PRODUCT_TYPES.CASE) {
+            if(![''].includes(product.item_type)){
+                return res.error(500, { message: 'Серверная ошибка', desc: 'Неизвестный тип кейсы' });
             }
+            await Items.create({ steamId: req.user.steamId, item_type: 'case', type: product.item_type });
         }
 
 

@@ -5,7 +5,7 @@ import config from '../config';
     try {
         await mongoose.connect(config.database_url, {
             useCreateIndex: false,
-            useFindAndModify: true,
+            useFindAndModify: false,
             useNewUrlParser: true,
             useUnifiedTopology: true,
             loggerLevel: 'info',
@@ -13,7 +13,7 @@ import config from '../config';
         });
         console.log(`Подключение к базе данных - успешно!`);
     } catch(e){
-        console.error(`Не удалось подключиться к базе:  ${e.message ? e.message : ''}\n${e.stack ? e.stack : ''}`);
+        console.error(`Не удалось подключиться к базе данных: ${e.message}\n${e.stack}`);
         return process.exit(-1);
     }
 })();

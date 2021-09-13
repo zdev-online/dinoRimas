@@ -85,9 +85,9 @@ export const get = async (req: Request, res: Response) => {
 
         let { page } = req.query;
         let limit = 10;
-        let products = await Products.find({}).limit(limit).skip(limit * Number(page));
+        let products = await Products.find({}).limit(limit).skip(limit * Number(page || 1));
         let count = await Products.countDocuments({});
-        return res.json({ products, current_page: page, limit, pages: Math.floor(count / limit) });
+        return res.json({ products, current_page: page || 1, limit, pages: Math.floor(count / limit) });
     } catch (e) {
         return errorHandler(res, e);
     }

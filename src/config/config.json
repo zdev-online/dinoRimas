@@ -6,13 +6,13 @@
         "V3": "C:\\Users\\user\\Desktop\\Coding\\Заказы\\DinoRimas\\serverDataTest\\s2"
     },
     "steam": {
-        "realm": "http://localhost:3000/",
-        "return_url": "http://localhost:3000/auth/steam",
+        "realm": "https://n2303port2.loca.lt/",
+        "return_url": "https://n2303port2.loca.lt/auth/steam",
         "api_key": "F5A03F17EFE3A54EE5076EA832E9C69A"
     },
     "database_url": "mongodb://localhost:27017/dino_rimas",
     "enot_io": {
-        "merchant_id": 0,
+        "merchant_id": 27014,
         "secret_word": "",
         "secret_word2": ""
     },

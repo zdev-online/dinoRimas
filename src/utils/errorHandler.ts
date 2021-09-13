@@ -2,7 +2,7 @@ import { Response } from "express";
 import { TokenExpiredError, NotBeforeError, JsonWebTokenError } from 'jsonwebtoken';
 import { Error as MongoError } from 'mongoose';
 
-export default (res: Response, e: Error) => {
+export default (res: Response, e: Error | any) => {
     if(e instanceof TokenExpiredError){ return res.error(400, { message: 'Токен просрочен' }); }
     if(e instanceof NotBeforeError){ return res.error(400, { message: 'Неверный токен' }); }
     if(e instanceof JsonWebTokenError){ return res.error(400, { message: 'Неверный токен' }); }

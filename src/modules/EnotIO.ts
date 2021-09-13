@@ -40,15 +40,23 @@ class EnotIOPayments {
 
                 let sign_check = md5(`${merchant}:${amount}:${config.enot_io.secret_word2}:${merchant_id}`);
 
-                if (sign_check != sign) {
-                    return res.json({ message: 'Неверная подпись оплаты' });
-                }
                 let payment = await Payments.findOne({ payment_id: intid });
                 if(!payment){ 
                     return res.error(400, { message: 'Покупка с таким ID не найдена' });
                 }
+
+                if (sign_check != sign_2) {
+                    payment.status = PayStatus.fail;
+                    await payment.save();
+                    return res.json({ message: 'Неверная подпись оплаты' });
+                }
+                
                 let user = await User.findById(payment.user);
-                if(!user){ return res.error(400, { message: 'Пользовател не найден' }); }
+                if(!user){ 
+                    payment.status = PayStatus.fail;
+                    await payment.save();
+                    return res.error(400, { message: 'Пользователь не найден' });
+                }
 
                 user.money += payment.amount;
                 payment.status = PayStatus.success;

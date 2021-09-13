@@ -4,9 +4,13 @@ import { Products, User, Dinos, Items } from "../database";
 import { PRODUCT_TYPES } from "../types/Products";
 import errorHandler from "../utils/errorHandler";
 import Servers from '../modules/DinoServer';
+import { validationResult } from 'express-validator'
 
 export const buy = async (req: Request, res: Response) => {
     try {
+        let errors = validationResult(req);
+        if (!errors.isEmpty()) { return res.error(400, { message: 'Ошибка валидации входных данных', errors: errors.array() }); }
+
         let { product_id, server, count } = req.body;
         let product = await Products.findById(product_id);
         if (!product) {
@@ -76,6 +80,9 @@ export const buy = async (req: Request, res: Response) => {
 
 export const get = async (req: Request, res: Response) => {
     try {
+        let errors = validationResult(req);
+        if (!errors.isEmpty()) { return res.error(400, { message: 'Ошибка валидации входных данных', errors: errors.array() }); }
+
         let { page } = req.query;
         let limit = 10;
         let products = await Products.find({}).limit(limit).skip(limit * Number(page));

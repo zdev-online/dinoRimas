@@ -26,7 +26,7 @@ export default async ({ srv, app }: Options) => {
         app.use(Routes);
         app.use((req: Request, res: Response) => res.error(400, { message: 'Неизвестный путь' }));
 
-        srv.listen(config.port, () => console.log(`Сервер успешно запущен на порту: ${config.port}`));
+        srv.listen(process.env.PORT || config.port, () => console.log(`Сервер успешно запущен на порту: ${config.port}`));
     } catch (e) {
         console.error(`Ошибка запуска сервера: ${e.message}\n${e.stack}`);
         return process.exit(-1);

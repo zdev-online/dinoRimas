@@ -75,7 +75,7 @@ class SteamAuth {
                     return err(new Error("Неверный SteamID"));
                 }
             } catch (error) {
-                return err(new Error("Ошибка серверов Steam: " + error.message));
+                return err(new Error("Ошибка серверов Steam: " + error.message ? error.message : ''));
             }
         });
     }

@@ -28,7 +28,7 @@ export default async ({ srv, app }: Options) => {
 
         srv.listen(process.env.PORT || config.port, () => console.log(`Сервер успешно запущен на порту: ${config.port}`));
     } catch (e) {
-        console.error(`Ошибка запуска сервера: ${e.message}\n${e.stack}`);
+        console.error(`Ошибка запуска сервера: ${e.message ? e.message : ''}\n${e.stack ? e.stack : ''}`);
         return process.exit(-1);
     }
 }
